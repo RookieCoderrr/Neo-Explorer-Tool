@@ -28,6 +28,7 @@ then
     docker-compose -p "test" up -d
 
 
+
 fi
 
 if [ $1 == "STAGING" ]

@@ -262,7 +262,7 @@ export default {
   },
   methods: {
     initWebSocket(){ //初始化weosocket
-      const wsuri = "ws://testneofura.ngd.network:2026/home";
+      const wsuri = "ws://service_ws_test:2026/home";
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;

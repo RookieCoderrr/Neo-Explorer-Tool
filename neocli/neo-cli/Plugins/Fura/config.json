@@ -1,9 +1,9 @@
 ﻿{
   "PluginConfiguration": {
-    "DbName": "Zilie",
+    "DbName": "pChainDb3",
     "Host": "mongodb1_test",
     "Port": 27017,
-    "User": "neofura",
+    "User": "pChain3",
     "Password": "123",
     "Log": true,
     "SleepTime": 10,

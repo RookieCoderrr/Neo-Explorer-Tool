@@ -1,2 +1,3 @@
-use pChainDb
-db.createUser({user: "pChain",pwd: "123",roles: [{ role:"dbOwner",db: "pChainDb" }]});
+
+use pChainDb3
+db.createUser({user: "pChain3",pwd: "123",roles: [{ role:"dbOwner",db: "pChainDb3" }]});
