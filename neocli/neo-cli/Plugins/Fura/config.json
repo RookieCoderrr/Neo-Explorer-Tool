@@ -1,0 +1,13 @@
+﻿{
+  "PluginConfiguration": {
+    "DbName": "Zilie",
+    "Host": "mongodb1_test",
+    "Port": 27017,
+    "User": "neofura",
+    "Password": "123",
+    "Log": true,
+    "SleepTime": 10,
+    "WaitTime": 120,
+    "ConnectionString": ""
+  }
+}

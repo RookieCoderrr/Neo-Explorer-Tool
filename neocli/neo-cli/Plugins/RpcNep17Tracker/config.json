@@ -1,0 +1,9 @@
+{
+  "PluginConfiguration": {
+    "DBPath": "Nep17BalanceData",
+    "TrackHistory": true,
+    "RecordNullAddressHistory": false,
+    "MaxResults": 1000000,
+    "Network": 1234567890
+  }
+}
