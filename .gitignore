@@ -1,4 +1,4 @@
 *.agdai
 MAlonzo/**
 
-node_modules/
+NeoExplorer/node_modules/
