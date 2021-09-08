@@ -16,7 +16,6 @@
 
 .DS_Store
 .idea/
-config.yml
 
 # dependencies
 github.com/
