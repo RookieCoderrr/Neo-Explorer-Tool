@@ -1,58 +1,71 @@
 # Neo-Explorer-Tool
-这是一个整合了neo-cli私链，neo-modules-fura链数据抓取工具,neo3fura API服务,以及neo-explorer区块链浏览器的工具，通过这个工具，你可以配置启动你自己的私链，通过MongodDb查看私链数据，通过API服务请求私链数据，使用浏览器可视化私链。
+This is a project that integrates neo-cli, neo-modules-fura, neo3fura, and neo-explorer. You could configure and start a neo chain, view and query chain data through API service, mongoDb and blockchain browser.
+* [neo-cli](https://github.com/neo-project/neo-node): A tool which could configure your node and connect to mainnet/testnet or start your own private chain.
+* [neo-modules-fura](https://github.com/neo-ngd/neo-modules-fura): A plugin which could record chain data from node into mongodb. 
+* [neo3fura](https://github.com/lutianzhou001/neo3fura): An api service for quickly getting data from the Neo.
+* [neo-explorer](https://github.com/RookieCoderrr/Neo-Explorer-UI): A blockchain browser which could visulize your chain data.
 
-## Requirements
+## 目录
+
+- [Requirements](#Requirements)
+- [Tools recommanded](#Tools recommanded)
+- [Get started](#Get started)
+- [Usages](#Usages)
+  - [Neo-cli usage and configration](#Neo-cli usage and configration)
+  - [Mongodb usage](#Mongodb usage)
+  - [API service usage](#API service usage)
+
+### Requirements
 Neo-Explorer-Tool requires [docker](https://www.docker.com/products/docker-desktop) to run, all of these modules are built in docker.
 
-## Tools recommanded
+### Tools recommanded
+* [docker-desktop](https://www.docker.com/products/docker-desktop)
+The GUI tool for docker, you can operate the container on the UI interface such as enter the container command line, view the container status, restart and delete the container, etc.
+
 * [Mongo Compass](https://www.mongodb.com/products/compass) 
-The GUI for MongoDB. Visually explore your data.
+The GUI for MongoDB, you can view the chain data recorded in default database.
 
 * [Postman](https://www.postman.com/)
-Postman is an API platform for building and using APIs
+An API platform for building and using APIs, you can send http request to obtain your chain data.
 
-
-## Getting Started
-下载项目
+### Getting started
+Downdload project
 ```
 git clone https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
 ```
-脚本文件启动项目
+Start project 
 ```
 cd Neo-Explorer-Tool
 ```
 ```
-./delpy.sh 创建docker镜像并启动容器
+./delpy.sh 
 ```
-容器创建完毕
 
 ![image](https://user-images.githubusercontent.com/86407596/132462791-0e4de6fe-78fc-4883-baca-2abc5341fd0d.png)
 
+Docker images and respective containers built successfully.
 
-此时默认创建的私链已经启动，访问 http://localhost:8080/ 即可查看到私链数据。
+Now, the default private chain created has been started, and you can view the private chain data in your browser http://localhost:8080/.
 
+If you want to create your own private chain, or connect to the mainnet/testnet, please follow the [Usages](#Usages) part
 
-如果你想创建自定义私链，或者连接主网/测试网，请查看以下部分。
+### Usages
 
-## Usages
+#### Neo-cli usage and configration**
 
-**Neo-cli 私链使用方法**
-
-首先进入neo-rc2-private容器的命令行
+Enter the neo-rc2-private container command line 
 ```
 docker exec -it neo-rc2-private /bin/bash
 ```
-进入neo-cli指令界面
+Switch to the neo-cli command line
 ```
 screen -r node 
 ```
-neo-cli命令参考
+Now you are in the neo-cli command line, a default wallet has been opened, which located at /neo-cli/defaultWallet.json with password 111111. Its rpc port is 20332, and the network id is 1234567890. you can operate cli command on your node such as “list asset" etc. For more info, please refer to [neo-cli command](https://docs.neo.org/docs/en-us/node/cli/cli.html).
 
-具体链操作请查看[neo-cli命令参考](https://docs.neo.org/docs/zh-cn/node/cli/cli.html).
+Attention: If you intend to deploy a contract on the chain, please put your contract manifest file into neocli/SmartContract directory on you local host, the neo-rc2-private container will automatically synchronize the local SmartContract directory to its /SmartContract directory. 
 
-ps:如果你想在链上部署合约，请把合约manifest文件放入到本地项目neocli/SmartContract目录下,容器会自动把本地SmartContract目录同步到容器/SmartContract目录下。
-
-返回neo-rc2-private容器的命令行
+neo-rc2-private容器的命令行
 ```
 按住 control+A 再按 D，此时私链在后台运行
 ```
@@ -60,20 +73,36 @@ ps:如果你想在链上部署合约，请把合约manifest文件放入到本地
 ```
 screen -r 
 ```
-默认钱包配置
-```
-the wallet file located at /neo-cli/defaultWallet.json with password 111111. Rpc port is 20332, and the network id is 1234567890.
-```
-修改链配置方法
 
-请参考[使用单节点搭建私有链](https://docs.neo.org/docs/zh-cn/develop/network/private-chain/solo.html)
+How to configure your own chain ?
 
-修改好后重新创建neo-cli容器
+Please refer to [Build a private chain](https://docs.neo.org/docs/en-us/develop/network/private-chain/solo.html)
+
+Attention: All of your modification and configurantion should be done in your local host (not in neo-rc2-private container which will cause data confusion)
+
+After your configuration, excute
 ```
-neocli/sh run.sh
+./delpy.sh 
+```
+to rebuild this project.
+
+**Tips:**
+
+Switch to docker command line from neo-cli command line, and neo-cli run in background.
+```
+Press control+A then D，
+```
+Switch to neo-cli command line from docker command line
+```
+screen -r
+```
+If you shut up neo-cli accidentally, run this command to reenter neo-cli 
+```
+dotnet neo-cli.dll
 ```
 
-**Mongodb查看链数据**
+
+#### Mongodb usage**
 
 
 * 在docker容器内查看数据
@@ -111,7 +140,7 @@ Databse:pchainDb3
 ```
 可以使用[Mongo命令行](https://docs.mongodb.com/manual/tutorial/getting-started/)，或者下载[Mongo Compass](https://www.mongodb.com/products/compass)查看。
 
-**API服务访问链数据**
+#### API service usage*
 
 * 使用curl指令 进行Http请求
 
