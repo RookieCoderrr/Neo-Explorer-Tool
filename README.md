@@ -24,23 +24,38 @@ cd Neo-Explorer-Tool
 ```
 ./delpy.sh 创建docker镜像并启动容器
 ```
-容器创建完毕，此时默认创建的私链已经启动。
+容器创建完毕
+
 ![image](https://user-images.githubusercontent.com/86407596/132462791-0e4de6fe-78fc-4883-baca-2abc5341fd0d.png)
-```
-此时访问 http://localhost:8080/ 即可查看到私链数据。
-```
-如果你想创建自定义私链，或者连接主网/测试网，请查看**Usages**部分
+
+
+此时默认创建的私链已经启动，访问 http://localhost:8080/ 即可查看到私链数据。
+
+
+如果你想创建自定义私链，或者连接主网/测试网，请查看以下部分。
 
 ## Usages
-```
-filetree 
-├── NeoExplorer
-├── neo3fura
-├── neocli
-├── LICENSE
-├── README.md
-└── deploy.sh
-```
 
 **Neo-cli 私链使用方法**
+
+首先进入neo-rc2-private容器的命令行
+```
+docker exec -it neo-rc2-private /bin/bash
+```
+进入neo-cli指令界面
+```
+screen -r node 
+```
+neo-cli命令参考
+```
+具体链操作请查看[neo-cli命令参考](https://docs.neo.org/docs/zh-cn/node/cli/cli.html).
+```
+返回neo-rc2-private容器的命令行
+```
+按住 control+A 再按 D，此时私链在后台运行
+```
+如果想再次进入neo-cli指令界面
+```
+screen -r 
+```
 
