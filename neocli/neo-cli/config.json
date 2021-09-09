@@ -14,8 +14,8 @@
       "WsPort": 20334
     },
     "UnlockWallet": {
-      "Path": "my-wallet.json",
-      "Password": "123456",
+      "Path": "defaultWallet.json",
+      "Password": "111111",
       "IsActive": true
     },
     "PluginURL": "https://github.com/neo-project/neo-modules/releases/download/v{1}/{0}.zip"
@@ -26,7 +26,7 @@
     "MaxTraceableBlocks": 2102400,
     "ValidatorsCount": 1,
     "StandbyCommittee": [
-      "03e4e2a62be23388daa2fdff7ec84fcfa14bb597a60968685e65f577e13666f5b4"
+      "02d703ec4c4adb60987bc33e0f9e5fe0c28c31bffaf810f511a16a66fba717cd0e"
     ],
     "SeedList": [
     ]
