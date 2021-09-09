@@ -8,13 +8,13 @@ This is a project that integrates neo-cli, neo-modules-fura, neo3fura, and neo-e
 ## Table of Contents
 
 * [Requirements](#Requirements)
-* [Tools recommanded](#Tools recommanded)
-* [Getting started](#Getting started)
+* [Tools recommanded](#tools-recommanded)
+* [Getting started](#getting-started)
 * [Usages](#Usages)
   * [Neo-cli](#Neo-cli)
   * [Mongodb ](#Mongodb)
-  * [API service ](#API service )
-  * [Blockchain browser](#Blockchain browser)
+  * [API service ](#aPI-service )
+  * [Blockchain browser](#blockchain-browser)
 
 ### Requirements
 Neo-Explorer-Tool requires [docker](https://www.docker.com/products/docker-desktop) to run, all of these modules are built in docker.
@@ -70,8 +70,8 @@ You can excute cli command on your node such as “list asset" etc.
 
 For more info, please refer to [neo-cli command](https://docs.neo.org/docs/en-us/node/cli/cli.html).
 
-> Notes:
-> If you intend to deploy a contract on the chain, please put your contract manifest file into Neo-Explorer-Tool/neocli/SmartContract directory on you local host,
+> **Notes:**
+>If you intend to deploy a contract on the chain, please put your contract manifest file into Neo-Explorer-Tool/neocli/SmartContract directory on you local host,
 the neo-rc2-private container will automatically synchronize the local SmartContract directory to its /SmartContract directory. 
 
 
@@ -79,7 +79,8 @@ the neo-rc2-private container will automatically synchronize the local SmartCont
 
 How to configure your own chain ?  Please refer to [Build a private chain](https://docs.neo.org/docs/en-us/develop/network/private-chain/solo.html).
 
-**Attention**: All of your modification and configurantion should be done in your local host (not in neo-rc2-private container which will cause data confusion)
+> **Notes**:
+>All of your modification and configurantion should be done in your local host (not in neo-rc2-private container which will cause data confusion)
 
 After your configuration, excute this command to rebuild the project.
 ```
