@@ -1,4 +1,4 @@
-
+db.isMaster()
 use pChainDb3
 db.dropDatabase()
 
