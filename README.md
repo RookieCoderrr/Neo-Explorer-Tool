@@ -3,13 +3,13 @@ This is a project that integrates neo-cli, neo-modules-fura, neo3fura, and neo-e
 * [neo-cli](https://github.com/neo-project/neo-node)
   * Description: A tool which could configure your node and connect to mainnet/testnet or start your own private chain.
 * [neo-modules-fura](https://github.com/neo-ngd/neo-modules-fura)
-  *  Author:[vikkkko](https://github.com/vikkkko).
+  *  Author:[vikkkko](https://github.com/vikkkko)
   *  Description: A plugin which could record chain data from node into mongodb. 
 * [neo3fura](https://github.com/lutianzhou001/neo3fura)
-  *  Author:[lutianzhou001](https://github.com/lutianzhou001). 
+  *  Author:[lutianzhou001](https://github.com/lutianzhou001)
   *  Description:An api service for quickly getting data from the Neo.
 * [neo-explorer](https://github.com/RookieCoderrr/Neo-Explorer-UI)
-  * Author:[dremofly](https://github.com/dremofly),[WSbaikaishui](https://github.com/WSbaikaishui),[zifanwangsteven](https://github.com/zifanwangsteven),[RookieCoderrr](https://github.com/RookieCoderrr).
+  * Author: [dremofly](https://github.com/dremofly), [WSbaikaishui](https://github.com/WSbaikaishui), [zifanwangsteven](https://github.com/zifanwangsteven), [RookieCoderrr](https://github.com/RookieCoderrr)
   * Description: A blockchain browser which could visulize your chain data.
 
 ## Table of Contents
