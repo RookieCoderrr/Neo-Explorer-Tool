@@ -9,7 +9,7 @@ This is a project that integrates neo-cli, neo-modules-fura, neo3fura, and neo-e
 
 * [Requirements](#Requirements)
 * [Tools recommanded](#Tools recommanded)
-* [Get started](#Get started)
+* [Getting started](#Getting started)
 * [Usages](#Usages)
   * [Neo-cli](#Neo-cli)
   * [Mongodb ](#Mongodb)
@@ -44,7 +44,7 @@ cd Neo-Explorer-Tool
 
 ![image](https://user-images.githubusercontent.com/86407596/132462791-0e4de6fe-78fc-4883-baca-2abc5341fd0d.png)
 
-Docker images and respective containers are built successfully as shown above. Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080/. 
+Docker images and respective containers are built successfully as shown above. Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080. 
 
 If you want to create your own private chain, or connect to the mainnet/testnet, please follow the [Usages](#Usages) part
 
@@ -70,8 +70,8 @@ You can excute cli command on your node such as “list asset" etc.
 
 For more info, please refer to [neo-cli command](https://docs.neo.org/docs/en-us/node/cli/cli.html).
 
-Attention: 
-If you intend to deploy a contract on the chain, please put your contract manifest file into Neo-Explorer-Tool/neocli/SmartContract directory on you local host,
+> Notes:
+> If you intend to deploy a contract on the chain, please put your contract manifest file into Neo-Explorer-Tool/neocli/SmartContract directory on you local host,
 the neo-rc2-private container will automatically synchronize the local SmartContract directory to its /SmartContract directory. 
 
 
