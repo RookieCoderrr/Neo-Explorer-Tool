@@ -36,7 +36,7 @@ git clone https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
 ```
 Start project 
 ```
-cd Neo-Explorer-Tool
+cd Neo-Explorer-Tool-main
 ```
 ```
 ./delpy.sh 
