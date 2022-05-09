@@ -26,7 +26,7 @@
     "Network": 4411722,
     "AddressVersion": 53,
     "MillisecondsPerBlock": 15000,
-    "MaxTransactionsPerBlock": o'qu512,
+    "MaxTransactionsPerBlock": 512,
     "MemoryPoolMaxTransactions": 50000,
     "MaxTraceableBlocks": 2102400,
     "InitialGasDistribution": 10000000000000000,
