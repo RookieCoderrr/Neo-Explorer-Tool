@@ -26,7 +26,7 @@
     "Network": 4411722,
     "AddressVersion": 53,
     "MillisecondsPerBlock": 15000,
-    "MaxTransactionsPerBlock": 512,
+    "MaxTransactionsPerBlock": o'qu512,
     "MemoryPoolMaxTransactions": 50000,
     "MaxTraceableBlocks": 2102400,
     "InitialGasDistribution": 10000000000000000,
@@ -63,11 +63,10 @@
       "02486fd15702c4490a26703112a5cc1d0923fd697a33406bd5a1c00e0013b09a70"
     ],
     "SeedList": [
-      "seed1.neo.org:10333",
-      "seed2.neo.org:10333",
-      "seed3.neo.org:10333",
-      "seed4.neo.org:10333",
-      "seed5.neo.org:10333"
+      "10.0.51.96:30003",
+      "10.0.51.97:30013",
+      "10.0.51.98:30023",
+      "10.0.51.99:30033"
     ]
   }
 }
