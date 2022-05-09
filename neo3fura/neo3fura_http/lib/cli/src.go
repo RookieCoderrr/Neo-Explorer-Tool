@@ -68,7 +68,7 @@ func (me *T) QueryOne(args struct {
 		if err == mongo.ErrNoDocuments {
 			return nil, stderr.ErrNotFound
 		} else if err != nil {
-			return nil, stderr.ErrFind
+			return nil, stderr.ErrFind1
 		}
 		if len(args.Query) == 0 {
 			convert = result
@@ -79,18 +79,18 @@ func (me *T) QueryOne(args struct {
 		}
 		r, err := json.Marshal(convert)
 		if err != nil {
-			return nil, stderr.ErrFind
+			return nil, stderr.ErrFind2
 		}
 		err = me.Redis.Set(me.Ctx, hash, hex.EncodeToString(r), 0).Err()
 		if err != nil {
-			return nil, stderr.ErrFind
+			return nil, stderr.ErrFind3
 		}
 		*ret = json.RawMessage(r)
 		return convert, nil
 	} else {
 		r, err := hex.DecodeString(val)
 		if err != nil {
-			return nil, stderr.ErrFind
+			return nil, stderr.ErrFind4
 		}
 
 		*ret = json.RawMessage(r)
@@ -100,7 +100,7 @@ func (me *T) QueryOne(args struct {
 			convert["_id"], err = primitive.ObjectIDFromHex(convert["_id"].(string))
 		}
 		if err != nil {
-			return nil, stderr.ErrFind
+			return nil, stderr.ErrFind5
 		}
 		return convert, nil
 	}
@@ -133,7 +133,7 @@ func (me *T) QueryAll(args struct {
 	co := options.CountOptions{}
 	count, err := collection.CountDocuments(me.Ctx, args.Filter, &co)
 	if err != nil {
-		return nil, 0, stderr.ErrFind
+		return nil, 0, stderr.ErrFind6
 	}
 	cursor, err := collection.Find(me.Ctx, args.Filter, op)
 	defer func(cursor *mongo.Cursor, ctx context.Context) {
@@ -146,10 +146,10 @@ func (me *T) QueryAll(args struct {
 		return nil, 0, stderr.ErrNotFound
 	}
 	if err != nil {
-		return nil, 0, stderr.ErrFind
+		return nil, 0, stderr.ErrFind7
 	}
 	if err = cursor.All(me.Ctx, &results); err != nil {
-		return nil, 0, stderr.ErrFind
+		return nil, 0, stderr.ErrFind8
 	}
 	for _, item := range results {
 		if len(args.Query) == 0 {
@@ -164,7 +164,7 @@ func (me *T) QueryAll(args struct {
 	}
 	r, err := json.Marshal(convert)
 	if err != nil {
-		return nil, 0, stderr.ErrFind
+		return nil, 0, stderr.ErrFind9
 	}
 	*ret = json.RawMessage(r)
 	return convert, count, nil
@@ -203,7 +203,7 @@ func (me *T) QueryLastJob(args struct {
 	opts := options.FindOne().SetSort(bson.M{"_id": -1})
 	err := collection.FindOne(me.Ctx, bson.M{}, opts).Decode(&result)
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind10
 	}
 	return result, nil
 }
@@ -235,10 +235,10 @@ func (me *T) QueryLastJobs(args struct {
 		return nil, stderr.ErrNotFound
 	}
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind11
 	}
 	if err = cursor.All(me.Ctx, &results); err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind12
 	}
 	return results, nil
 }
@@ -281,10 +281,10 @@ func (me *T) QueryAggregate(args struct {
 		return nil, stderr.ErrNotFound
 	}
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind13
 	}
 	if err = cursor.All(me.Ctx, &results); err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind14
 	}
 
 	for _, item := range results {
@@ -301,7 +301,7 @@ func (me *T) QueryAggregate(args struct {
 
 	r, err := json.Marshal(convert)
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind15
 	}
 	*ret = json.RawMessage(r)
 	return convert, nil
@@ -323,7 +323,7 @@ func (me *T) QueryDocument(args struct {
 	convert["total counts"] = count
 	r, err := json.Marshal(convert)
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind16
 	}
 	*ret = json.RawMessage(r)
 	return convert, nil
@@ -360,18 +360,18 @@ func (me *T) GetDistinctCount(args struct {
 		return nil, stderr.ErrNotFound
 	}
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind17
 	}
 
 	if err = cursor.All(me.Ctx, &results); err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind18
 	}
 
 	convert["total"] = results[0]["count"]
 
 	r, err := json.Marshal(convert)
 	if err != nil {
-		return nil, stderr.ErrFind
+		return nil, stderr.ErrFind19
 	}
 	*ret = json.RawMessage(r)
 
