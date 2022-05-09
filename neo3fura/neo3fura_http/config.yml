@@ -1,0 +1,26 @@
+
+database_test:
+  host: "mongodb1_test"
+  port: "27017"
+  dbname: "pChainDb3"
+  database: "pChainDb3"
+
+database_local:
+  host: "mongodb_test"
+  port: "27017"
+  dbname: "job"
+  database: "job"
+
+redis:
+  host: "cache_test"
+  port: "6379"
+
+proxy:
+  uri:
+    - "http://seed1t4.neo.org:20332"
+    - "http://seed2t4.neo.org:20332"
+    - "http://seed3t4.neo.org:20332"
+    - "http://seed4t4.neo.org:20332"
+    - "http://seed5t4.neo.org:20332"
+
+replica: "master"
