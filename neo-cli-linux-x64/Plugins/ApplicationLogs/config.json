@@ -1,0 +1,9 @@
+{
+  "PluginConfiguration": {
+    "Path": "ApplicationLogs_{0}",
+    "Network": 4411722
+  },
+  "Dependency": [
+    "RpcServer"
+  ]
+}

@@ -28,7 +28,7 @@ func (me T) GetHoldersByContractHash() error {
 		return err
 	}
 	for _, item := range r1 {
-		_, count, err := me.Client.QueryAll(struct {
+		holders, count, err := me.Client.QueryAll(struct {
 			Collection string
 			Index      string
 			Sort       bson.M
@@ -40,11 +40,19 @@ func (me T) GetHoldersByContractHash() error {
 			Collection: "Address-Asset",
 			Index:      "GetHoldersByContractHash",
 			Sort:       bson.M{"balance": -1},
-			Filter:     bson.M{"asset": item["hash"]},
+			Filter:     bson.M{"asset": item["hash"], "balance": bson.M{"$gt": 0}},
 			Query:      []string{},
 		}, ret)
 		if err != nil {
 			return err
+		}
+		f := make(map[string]interface{})
+		count = 0
+		for _, holder := range holders {
+			f[holder["address"].(string)] = 1
+		}
+		for _, _ = range f {
+			count = count + 1
 		}
 		data = append(data, bson.M{item["hash"].(string): count})
 	}

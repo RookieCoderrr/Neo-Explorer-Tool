@@ -12,6 +12,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	log2 "neo3fura_http/lib/log"
+	"neo3fura_http/lib/type/h160"
 	"neo3fura_http/var/stderr"
 )
 
@@ -24,6 +26,13 @@ type T struct {
 	Ctx       context.Context
 	RpcCli    *rpc.RpcClient
 	RpcPorts  []string
+	NeoFs string
+}
+
+type Insert struct {
+	Hash   h160.T
+	Id 				int32
+	UpdateCounter 	int32
 }
 
 func (me *T) QueryOne(args struct {
@@ -50,7 +59,7 @@ func (me *T) QueryOne(args struct {
 	hash := hex.EncodeToString(h.Sum(nil))
 	val, err := me.Redis.Get(me.Ctx, hash).Result()
 	// if sort != nil, it may have several results, we have to pick the sorted one
-	if err == redis.Nil || args.Sort != nil {
+	if err != nil || len(args.Sort) != 0 || args.Index == "GetCandidateByAddress" || args.Index == "GetAssetInfoByContractHash" || args.Index == "GetVerifiedContractByContractHash" || args.Index == "GetVotesByCandidateAddress" {
 		var result map[string]interface{}
 		convert := make(map[string]interface{})
 		collection := me.C_online.Database(me.Db_online).Collection(args.Collection)
@@ -107,6 +116,13 @@ func (me *T) QueryAll(args struct {
 	Limit      int64
 	Skip       int64
 }, ret *json.RawMessage) ([]map[string]interface{}, int64, error) {
+
+	//if args.Limit == 0 {
+	//	args.Limit = limit2.DefaultLimit
+	//} else if args.Limit > limit2.MaxLimit {
+	//	args.Limit = limit2.MaxLimit
+	//}
+
 	var results []map[string]interface{}
 	convert := make([]map[string]interface{}, 0)
 	collection := me.C_online.Database(me.Db_online).Collection(args.Collection)
@@ -120,7 +136,12 @@ func (me *T) QueryAll(args struct {
 		return nil, 0, stderr.ErrFind
 	}
 	cursor, err := collection.Find(me.Ctx, args.Filter, op)
-	defer cursor.Close(me.Ctx)
+	defer func(cursor *mongo.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log2.Fatalf("Closing cursor error %v", err)
+		}
+	}(cursor, me.Ctx)
 	if err == mongo.ErrNoDocuments {
 		return nil, 0, stderr.ErrNotFound
 	}
@@ -161,6 +182,19 @@ func (me *T) SaveJob(args struct {
 	return true, nil
 }
 
+func (me *T) QueryOneJob(args struct {
+	Collection string
+	Filter     bson.M
+}) (map[string]interface{}, error) {
+	collection := me.C_local.Database("job").Collection(args.Collection)
+	var result map[string]interface{}
+	err := collection.FindOne(me.Ctx, args.Filter).Decode(&result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (me *T) QueryLastJob(args struct {
 	Collection string
 }) (map[string]interface{}, error) {
@@ -191,7 +225,12 @@ func (me *T) QueryLastJobs(args struct {
 	op.SetLimit(args.Limit)
 	op.SetSkip(args.Skip)
 	cursor, err := collection.Find(me.Ctx, args.Filter, op)
-	defer cursor.Close(me.Ctx)
+	defer func(cursor *mongo.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log2.Fatalf("Closing cursor error %v", err)
+		}
+	}(cursor, me.Ctx)
 	if err == mongo.ErrNoDocuments {
 		return nil, stderr.ErrNotFound
 	}
@@ -212,11 +251,32 @@ func (me *T) QueryAggregate(args struct {
 	Pipeline   []bson.M
 	Query      []string
 }, ret *json.RawMessage) ([]map[string]interface{}, error) {
+
+	//for _, v := range args.Pipeline {
+	//	limit := v["$limit"]
+	//	if limit != nil {
+	//		if limit.(int64) == 0 {
+	//			v["$limit"] = limit2.DefaultLimit
+	//		}
+	//		if limit.(int64) > limit2.MaxLimit {
+	//			v["$limit"] = limit2.MaxLimit
+	//		}
+	//	}
+	//}
+
 	var results []map[string]interface{}
 	convert := make([]map[string]interface{}, 0)
 	collection := me.C_online.Database(me.Db_online).Collection(args.Collection)
 	op := options.AggregateOptions{}
+
 	cursor, err := collection.Aggregate(me.Ctx, args.Pipeline, &op)
+
+	defer func(cursor *mongo.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log2.Fatalf("Closing cursor error %v", err)
+		}
+	}(cursor, me.Ctx)
 	if err == mongo.ErrNoDocuments {
 		return nil, stderr.ErrNotFound
 	}
@@ -226,6 +286,7 @@ func (me *T) QueryAggregate(args struct {
 	if err = cursor.All(me.Ctx, &results); err != nil {
 		return nil, stderr.ErrFind
 	}
+
 	for _, item := range results {
 		if len(args.Query) == 0 {
 			convert = append(convert, item)
@@ -237,6 +298,7 @@ func (me *T) QueryAggregate(args struct {
 			convert = append(convert, temp)
 		}
 	}
+
 	r, err := json.Marshal(convert)
 	if err != nil {
 		return nil, stderr.ErrFind
@@ -265,4 +327,75 @@ func (me *T) QueryDocument(args struct {
 	}
 	*ret = json.RawMessage(r)
 	return convert, nil
+}
+
+
+// 去重查询统计
+func (me *T) GetDistinctCount(args struct {
+	Collection string
+	Index      string
+	Sort       bson.M
+	Filter     bson.M
+	Pipeline   []bson.M
+	Query      []string
+}, ret *json.RawMessage) (map[string]interface{}, error) {
+	var results []map[string]interface{}
+	convert := make(map[string]interface{})
+	collection := me.C_online.Database(me.Db_online).Collection(args.Collection)
+	op := options.AggregateOptions{}
+	pipeline := bson.M{
+		"$group": bson.M{"_id": "$hash"},
+	}
+	args.Pipeline = append(args.Pipeline, pipeline)
+	args.Pipeline = append(args.Pipeline, bson.M{"$count": "count"})
+	cursor, err := collection.Aggregate(me.Ctx, args.Pipeline, &op)
+
+	defer func(cursor *mongo.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log2.Fatalf("Closing cursor error %v", err)
+		}
+	}(cursor, me.Ctx)
+	if err == mongo.ErrNoDocuments {
+		return nil, stderr.ErrNotFound
+	}
+	if err != nil {
+		return nil, stderr.ErrFind
+	}
+
+	if err = cursor.All(me.Ctx, &results); err != nil {
+		return nil, stderr.ErrFind
+	}
+
+	convert["total"] = results[0]["count"]
+
+	r, err := json.Marshal(convert)
+	if err != nil {
+		return nil, stderr.ErrFind
+	}
+	*ret = json.RawMessage(r)
+
+	return convert, nil
+
+}
+
+
+func (me *T) InsertDocument(args struct {
+	Collection string
+	Index      string
+	Insert     *Insert
+}, ret *json.RawMessage) (map[string]interface{}, error) {
+	collection := me.C_online.Database(me.Db_online).Collection(args.Collection)
+	_,err := collection.InsertOne(me.Ctx,&args.Insert)
+	if err != nil {
+		return nil, stderr.ErrInsertDocument
+	}
+	result := make(map[string]interface{})
+	result["msg"] = "Insert document done!"
+	r, err := json.Marshal(result)
+	if err != nil {
+		return nil, stderr.ErrInsertDocument
+	}
+	*ret = json.RawMessage(r)
+	return result, nil
 }

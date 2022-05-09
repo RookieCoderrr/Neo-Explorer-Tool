@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -20,7 +21,7 @@ func (me *T) GetDailyTransactions(args struct {
 		Query      []string
 		Limit      int64
 		Skip       int64
-	}{Collection: "DailyTransactions", Index: "GetDailyTransactions", Sort: bson.M{"id": -1}, Filter: bson.M{}, Query: []string{}, Limit: args.Days})
+	}{Collection: "DailyTransactions", Index: "GetDailyTransactions", Sort: bson.M{"_id": -1}, Filter: bson.M{}, Query: []string{}, Limit: args.Days})
 	if err != nil {
 		return err
 	}

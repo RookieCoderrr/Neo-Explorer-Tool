@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -22,8 +23,10 @@ func (me *T) GetCumulativeFeeBurn(args struct {
 			Index:      "GetCumulativeFeeBurn",
 			Sort:       bson.M{},
 			Filter:     bson.M{},
-			Pipeline:   []bson.M{bson.M{"$group": bson.M{"_id": "", "feeburn": bson.M{"$sum": "$systemFee"}}}},
-			Query:      []string{},
+			Pipeline: []bson.M{
+				bson.M{"$match": bson.M{"systemFee": bson.M{"$gt": 0}}},
+				bson.M{"$group": bson.M{"_id": "", "feeburn": bson.M{"$sum": "$systemFee"}}}},
+			Query: []string{},
 		}, ret)
 	if err != nil {
 		return err

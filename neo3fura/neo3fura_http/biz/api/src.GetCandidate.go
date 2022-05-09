@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -22,7 +23,7 @@ func (me *T) GetCandidate(args struct {
 		Collection: "Candidate",
 		Index:      "GetCandidate",
 		Sort:       bson.M{"votesOfCandidate": -1},
-		Filter:     bson.M{},
+		Filter:     bson.M{"state": true},
 		Query:      []string{},
 		Limit:      args.Limit,
 		Skip:       args.Skip,

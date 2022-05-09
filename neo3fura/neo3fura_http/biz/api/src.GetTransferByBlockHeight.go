@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
 	"neo3fura_http/lib/type/uintval"
 	"neo3fura_http/var/stderr"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetTransferByBlockHeight(args struct {
@@ -17,7 +18,7 @@ func (me *T) GetTransferByBlockHeight(args struct {
 		return stderr.ErrInvalidArgs
 	}
 	if args.Limit == 0 {
-		args.Limit = 500
+		args.Limit = 512
 	}
 
 	r1, err := me.Client.QueryOne(struct {
@@ -28,7 +29,7 @@ func (me *T) GetTransferByBlockHeight(args struct {
 		Query      []string
 	}{
 		Collection: "Block",
-		Index:      "GetBlockByBlockHeight",
+		Index:      "GetTransferByBlockHeight",
 		Sort:       bson.M{},
 		Filter:     bson.M{"index": args.BlockHeight},
 		Query:      []string{},
@@ -47,7 +48,7 @@ func (me *T) GetTransferByBlockHeight(args struct {
 		Skip       int64
 	}{
 		Collection: "Nep11TransferNotification",
-		Index:      "GetNep11TransferByAddress",
+		Index:      "GetTransferByBlockHeight",
 		Sort:       bson.M{},
 		Filter:     bson.M{"timestamp": r1["timestamp"]},
 		Query:      []string{},

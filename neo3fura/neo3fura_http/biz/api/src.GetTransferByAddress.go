@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
 	"neo3fura_http/lib/type/h160"
 	"neo3fura_http/var/stderr"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetTransferByAddress(args struct {
@@ -17,7 +18,7 @@ func (me *T) GetTransferByAddress(args struct {
 		return stderr.ErrInvalidArgs
 	}
 	if args.Limit == 0 {
-		args.Limit = 500
+		args.Limit = 512
 	}
 	r1, _, err1 := me.Client.QueryAll(struct {
 		Collection string

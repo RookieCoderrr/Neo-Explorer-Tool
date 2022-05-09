@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -17,7 +18,7 @@ func (me *T) GetCandidateCount(args struct {
 		Collection: "Candidate",
 		Index:      "GetCandidateCount",
 		Sort:       bson.M{},
-		Filter:     bson.M{},
+		Filter:     bson.M{"state": true},
 	}, ret)
 	if err != nil {
 		return err

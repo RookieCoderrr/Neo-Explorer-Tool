@@ -2,7 +2,8 @@ FROM golang:1.15.6
 
 ENV GO111MODULE="on"
 
-ENV GOPROXY="https://goproxy.cn"
+#这个代理好用，不会用redis报错问题
+ENV GOPROXY="https://proxy.golang.org"
 
 ARG RT
 

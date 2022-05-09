@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -13,7 +14,7 @@ func (me *T) GetContractListByName(args struct {
 }, ret *json.RawMessage) error {
 
 	if args.Limit == 0 {
-		args.Limit = 500
+		args.Limit = 512
 	}
 
 	var r1, err = me.Client.QueryAggregate(
@@ -81,6 +82,7 @@ func (me *T) GetContractListByName(args struct {
 					"foreignField": "hash",
 					"as":           "Transaction"}},
 				bson.M{"$match": bson.M{"name": bson.M{"$regex": args.Name, "$options": "$i"}}},
+				bson.M{"$match": bson.M{"updatecounter": 0}},
 				bson.M{"$count": "total counts"},
 			},
 			Query: []string{},

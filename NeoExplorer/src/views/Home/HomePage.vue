@@ -278,7 +278,7 @@ export default {
     },
     websocketonmessage(e){ //数据接收
   // console.log(e.data)
-      if( e.data != 'hello neo3fura'){
+      if( e.data != 'hello neo3fura-v1'){
       try{
       const redata = JSON.parse(e.data);
       if (Object.keys(redata)[0] ==="BlockCount"){

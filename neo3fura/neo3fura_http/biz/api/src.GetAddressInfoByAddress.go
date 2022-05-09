@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
 	"neo3fura_http/lib/type/h160"
 	"neo3fura_http/var/stderr"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetAddressInfoByAddress(args struct {
@@ -40,7 +41,7 @@ func (me *T) GetAddressInfoByAddress(args struct {
 		Skip       int64
 	}{
 		Collection: "Transaction",
-		Index:      "GetRawTransactionByAddress",
+		Index:      "GetAddressInfoByAddress",
 		Sort:       bson.M{},
 		Filter:     bson.M{"sender": args.Address.TransferAddress()},
 		Query:      []string{},
@@ -57,7 +58,7 @@ func (me *T) GetAddressInfoByAddress(args struct {
 		Query      []string
 	}{
 		Collection: "Transaction",
-		Index:      "GetRawTransactionByAddress",
+		Index:      "GetAddressInfoByAddress",
 		Sort:       bson.M{"_id": -1},
 		Filter:     bson.M{"sender": args.Address.TransferAddress()},
 		Query:      []string{},

@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
 	"neo3fura_http/lib/type/h160"
 	"neo3fura_http/var/stderr"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetAssetsHeldByAddress(args struct {
@@ -28,7 +29,7 @@ func (me *T) GetAssetsHeldByAddress(args struct {
 		Collection: "Address-Asset",
 		Index:      "GetAssetsHeldByAddress",
 		Sort:       bson.M{"balance": -1},
-		Filter:     bson.M{"address": args.Address.TransferredVal()},
+		Filter:     bson.M{"address": args.Address.TransferredVal(), "balance": bson.M{"$gt": 0}},
 		Query:      []string{},
 		Limit:      args.Limit,
 		Skip:       args.Skip,
@@ -41,7 +42,7 @@ func (me *T) GetAssetsHeldByAddress(args struct {
 		return err
 	}
 	r, err := json.Marshal(r2)
-	if err != nil  {
+	if err != nil {
 		return err
 	}
 	*ret = json.RawMessage(r)

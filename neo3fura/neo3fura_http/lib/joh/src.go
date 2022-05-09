@@ -3,7 +3,7 @@ package joh
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"github.com/thinkeridea/go-extend/exnet"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"neo3fura_http/config"
@@ -13,7 +13,6 @@ import (
 	"net/http"
 	"net/rpc"
 	"path/filepath"
-	"sort"
 	// "sort"
 )
 
@@ -33,6 +32,7 @@ type Config struct {
 var repostMode int = 0
 
 func (me *T) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		log2.Infof("Error in reading body: %v", err)
@@ -42,42 +42,58 @@ func (me *T) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	req.Body = ioutil.NopCloser(bytes.NewReader(body))
 	r.Body = ioutil.NopCloser(bytes.NewReader(body))
 
+	ip := exnet.ClientPublicIP(r)
+	if ip == "" {
+		ip = exnet.ClientIP(r)
+	}
+	log2.Infof("Request from:%v", ip)
+
 	request := make(map[string]interface{})
 	err = json.Unmarshal(body, &request)
 	if err != nil {
 		log2.Infof("Error decoding in JSON: %v", err)
-		http.Error(w, "can't decoding in JSON", http.StatusBadRequest)
+		http.Error(w, "Can't decoding in JSON", http.StatusBadRequest)
 	} else {
 		log2.Infof("Request is: %v", request["method"])
 		c, err := me.OpenConfigFile()
 		if err != nil {
-			log2.Fatalf("open config file error:%s", err)
+			log2.Fatalf("Open config file error:%s", err)
 		}
-		sort.Strings(config.Apis)
-		index := sort.SearchStrings(config.Apis, fmt.Sprintf("%v", request["method"]))
-		if index < len(config.Apis) && config.Apis[index] == request["method"] {
+		if me.exists(request["method"].(string)) == true {
 			// can find
+			w.Header().Set("Content-Type", "application/json")
+			log2.Infof("Serving %v", request["method"])
 			conn := &rwio.T{R: req.Body, W: w}
 			codec := &scex.T{}
 			codec.Init(conn)
 			rpc.ServeCodec(codec)
 		} else {
 			// can't find
-            responseBody := bytes.NewBuffer(body)
-            w.Header().Set("Content-Type","application/json")
-			resp,err := http.Post(c.Proxy.URI[repostMode],"application/json",responseBody)
-            if err!=nil {
-            	log2.Fatalf("Repost error%v",err)
+			log2.Infof("Repost %v", request["method"])
+			responseBody := bytes.NewBuffer(body)
+			w.Header().Set("Content-Type", "application/json")
+			resp, err := http.Post(c.Proxy.URI[repostMode], "application/json", responseBody)
+			if err != nil {
+				log2.Fatalf("Repost error%v", err)
 			}
 			defer resp.Body.Close()
-			body,err:=ioutil.ReadAll(resp.Body)
-			if err!=nil{
-				log2.Fatalf("Read err%v",err)
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				log2.Fatalf("Read err%v", err)
 			}
 			w.Write(body)
 			repostMode = (repostMode + 1) % 5
 		}
 	}
+}
+
+func (me *T) exists(method string) bool {
+	for _, item := range config.Apis {
+		if item == method {
+			return true
+		}
+	}
+	return false
 }
 
 func (me *T) OpenConfigFile() (Config, error) {

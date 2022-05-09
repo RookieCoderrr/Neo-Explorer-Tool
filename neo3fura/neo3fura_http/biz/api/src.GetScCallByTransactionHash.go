@@ -2,9 +2,10 @@ package api
 
 import (
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
 	"neo3fura_http/lib/type/h256"
 	"neo3fura_http/var/stderr"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetScCallByTransactionHash(args struct {
@@ -27,7 +28,7 @@ func (me *T) GetScCallByTransactionHash(args struct {
 	}{
 		Collection: "ScCall",
 		Index:      "GetScCallByTransactionHash",
-		Sort:       bson.M{},
+		Sort:       bson.M{"_id": 1},
 		Filter:     bson.M{"txid": args.TransactionHash.Val()},
 		Query:      []string{},
 		Limit:      args.Limit,

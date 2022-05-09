@@ -2,11 +2,13 @@ package api
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func (me *T) GetBestBlockHash(args struct {
 	Filter map[string]interface{}
+	Raw    *map[string]interface{}
 }, ret *json.RawMessage) error {
 	r1, err := me.Client.QueryOne(struct {
 		Collection string
@@ -23,6 +25,9 @@ func (me *T) GetBestBlockHash(args struct {
 	}, ret)
 	if err != nil {
 		return err
+	}
+	if args.Raw != nil {
+		*args.Raw = r1
 	}
 	r1, err = me.Filter(r1, args.Filter)
 	if err != nil {

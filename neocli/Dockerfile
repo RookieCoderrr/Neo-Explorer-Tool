@@ -1,6 +1,6 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS Final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS Final
 
-RUN apt-get update && apt-get install -y screen \
+RUN apt-get clean && apt-get update && apt-get install -y screen \
     curl \
 libleveldb-dev \
     && rm -rf /var/lib/apt/lists/*
