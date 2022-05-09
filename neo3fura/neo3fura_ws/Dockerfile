@@ -17,7 +17,7 @@ COPY . ./application
 
 WORKDIR "application"
 
-RUN  go build -o main ./app/ws/src.go
+RUN  go build -o main app/ws/src.go
 
 EXPOSE 2026
 

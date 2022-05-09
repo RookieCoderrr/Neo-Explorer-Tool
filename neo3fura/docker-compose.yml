@@ -16,21 +16,21 @@ services:
       - mongo
       - mongodb1
 
-  neofura_ws:
-    build:
-      context: "./neo3fura_ws"
-      args:
-        RT: ${RUNTIME}
-    ports:
-      - "2026:2026"
-    networks:
-      - network
-    restart: always
-    container_name: service_ws_${RUNTIME}
-    depends_on:
-      - redis
-      - mongo
-      - mongodb1
+#  neofura_ws:
+#    build:
+#      context: "./neo3fura_ws"
+#      args:
+#        RT: ${RUNTIME}
+#    ports:
+#      - "2026:2026"
+#    networks:
+#      - network
+#    restart: always
+#    container_name: service_ws_${RUNTIME}
+#    depends_on:
+#      - redis
+#      - mongo
+#      - mongodb1
 
   redis:
     image: redis
