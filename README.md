@@ -64,9 +64,10 @@ Enter the neo-rc2-private container command line
 ```
 docker exec -it neo-rc2-private /bin/bash
 ```
-Switch to the neo-cli command line
+Neo-cli is running in Screen, use screen command to enter neo-cli.
 ```
-screen -r node 
+screen -ls
+screen -r 名字.node
 ```
 Now you are in the neo-cli command line, a default wallet has been opened.
 
