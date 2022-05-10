@@ -6,7 +6,7 @@ database_test:
   database: "pChainDb3"
 
 database_local:
-  host: "mongodb_test"
+  host: "mongo_test"
   port: "27017"
   dbname: "job"
   database: "job"
