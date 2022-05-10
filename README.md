@@ -40,11 +40,11 @@ An API platform for building and using APIs, you can send http request to obtain
 ### Getting started
 Downdload project
 ```
-git clone https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
+git clone -b neo-tool https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
 ```
 Start project 
 ```
-cd Neo-Explorer-Tool-main
+cd Neo-Explorer-Tool
 ```
 ```
 ./delpy.sh 
@@ -73,7 +73,7 @@ Now you are in the neo-cli command line, a default wallet has been opened.
 
 It locates at Neo-Explorer-Tool/neo-cli/defaultWallet.json with password **111111**. 
 
-Its rpc port is **20332**, and the network id is **1234567890**. 
+Its rpc port is **10332**, and the network id is **4411722**. 
 
 You can excute cli command on your node such as “list asset" etc. 
 
