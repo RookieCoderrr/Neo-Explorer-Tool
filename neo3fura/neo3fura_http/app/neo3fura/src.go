@@ -175,6 +175,11 @@ func main() {
 			go j.GetBlockInfoList()
 			go j.GetHourlyTransactions()
 		})
+		err = c2.AddFunc("@hourly", func() {
+		    log2.Infof("Start minute job")
+		    go j.GetPopularTokens()
+        })
+
 		if err != nil {
 			log2.Fatal("add job function error:%s", err)
 		}
