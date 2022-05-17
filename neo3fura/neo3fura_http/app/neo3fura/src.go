@@ -175,7 +175,7 @@ func main() {
 			go j.GetBlockInfoList()
 			go j.GetHourlyTransactions()
 		})
-		err = c2.AddFunc("@hourly", func() {
+		err = c2.AddFunc("@every 60s", func() {
 		    log2.Infof("Start minute job")
 		    go j.GetPopularTokens()
         })
