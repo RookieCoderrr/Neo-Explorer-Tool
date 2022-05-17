@@ -1,7 +1,7 @@
 
 database_test:
   host: "mongodb1_test"
-  port: "27017"
+  port: "270017"
   dbname: "pChainDb3"
   database: "pChainDb3"
 
