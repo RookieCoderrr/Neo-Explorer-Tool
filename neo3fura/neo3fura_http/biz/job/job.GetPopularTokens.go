@@ -41,7 +41,7 @@ func (me T) GetPopularTokens() error {
 	}
 	if len(r1) == 0 {
     		return nil
-    	}
+	}
 	r2 := make(map[string]int)
 	for _, item := range r1 {
 		r2[item["contract"].(string)] = r2[item["contract"].(string)] + 1
