@@ -27,7 +27,7 @@ echo 'Neocli NeoExplorer Success'
 
 cd ..
 
-echo 'Creating db and user for you private chian=================='
+echo 'Creating db and user for you private chain=================='
 
 cd neo3fura
 

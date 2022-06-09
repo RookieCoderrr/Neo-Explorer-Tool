@@ -2,7 +2,7 @@
   "PluginConfiguration": {
     "Servers": [
       {
-        "Network": 4411722,
+        "Network": 860833102,
         "BindAddress": "127.0.0.1",
         "Port": 10332,
         "SslCert": "",
@@ -14,9 +14,7 @@
         "MaxFee": 0.1,
         "MaxConcurrentConnections": 40,
         "MaxIteratorResultItems": 100,
-        "DisabledMethods": [
-          "openwallet"
-        ]
+        "DisabledMethods": [ "openwallet" ]
       }
     ]
   }
