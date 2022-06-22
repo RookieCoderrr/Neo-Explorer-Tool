@@ -102,10 +102,11 @@ the neo-rc2-private container will automatically synchronize the local SmartCont
 
 How to configure your own chain ?  Please refer to [Build a private chain](https://docs.neo.org/docs/en-us/develop/network/private-chain/solo.html).
 
-> **Notes**:
->All of your modification and configurantion should be done in your local host (not in neo-rc2-private container which will cause data confusion)
+IF you have a new node package, you need to enter the neocli/neo-cli directory, keep the Plugins folder, entry.sh file, defaultWallet.json file in this directory, and delete other files. Then copy all the contents of the new node package to the neocli/neo-cli directory. If the new node package also has a Plugins folder, keep the Plugins folder of the original directory and delete the new one. After copying, you need to check whether the config.json is configured correctly, and whether the network in config.json is the same as that of all config.json under Plugins directory. 
 
-After your configuration, excute this command to rebuild the project.
+IF you have a new node package, you need to enter the neocli/neo-cli directory, keep the Plugins folder, entry.sh file, defaultWallet.json file in this directory, and delete other files. Then copy all the contents of the new node package to the neocli/neo-cli directory. If the new node package also has a Plugins folder, keep the Plugins folder of the original directory and delete the new one. After copying, you need to check whether the config.json is configured correctly, and whether the network in config.json is the same as that of all config.json under Plugins directory. If it is inconsistent, modify all the same.
+
+After your configuration above, you should rebuild all docker containers . Only need to excute this command again to rebuild.
 ```
 ./delpy.sh 
 ```
@@ -128,7 +129,7 @@ dotnet neo-cli.dll
 
 #### Mongodb 
 
-enter into docker command line in mongodb1_test container
+enter into docker command line in mongodb1_test container which is the only entry you can query chain date.
 
 ```
 docker exec -it mongodb1_test /bin/bash
