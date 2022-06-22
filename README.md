@@ -104,8 +104,6 @@ How to configure your own chain ?  Please refer to [Build a private chain](https
 
 IF you have a new node package, you need to enter the neocli/neo-cli directory, keep the Plugins folder, entry.sh file, defaultWallet.json file in this directory, and delete other files. Then copy all the contents of the new node package to the neocli/neo-cli directory. If the new node package also has a Plugins folder, keep the Plugins folder of the original directory and delete the new one. After copying, you need to check whether the config.json is configured correctly, and whether the network in config.json is the same as that of all config.json under Plugins directory. 
 
-IF you have a new node package, you need to enter the neocli/neo-cli directory, keep the Plugins folder, entry.sh file, defaultWallet.json file in this directory, and delete other files. Then copy all the contents of the new node package to the neocli/neo-cli directory. If the new node package also has a Plugins folder, keep the Plugins folder of the original directory and delete the new one. After copying, you need to check whether the config.json is configured correctly, and whether the network in config.json is the same as that of all config.json under Plugins directory. If it is inconsistent, modify all the same.
-
 After your configuration above, you should rebuild all docker containers . Only need to excute this command again to rebuild.
 ```
 ./delpy.sh 
