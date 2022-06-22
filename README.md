@@ -175,7 +175,7 @@ response format
 { "id": 1, "result": { "hash": "0x226844a595780dd2881bbfedbf4ffabe25fcc691969359aa1b7f87a715cdea75" }, "error": null }
 ```
 
-Refer to [Neofura-Doc]([https://neo3phora-doc.readthedocs.io/en/latest/docs/APIs/index.html](https://neo-ngd.github.io/neo3fura/#/)) for more API service info.
+Refer to [Neofura-Doc](https://neo-ngd.github.io/neo3fura/#/) for more API service info.
 
 The url and port exposed for API service is http://127.0.0.1:1926
 
