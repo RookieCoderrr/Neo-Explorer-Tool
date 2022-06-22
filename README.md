@@ -40,7 +40,7 @@ An API platform for building and using APIs, you can send http request to obtain
 ### Getting started
 Downdload project
 ```
-git clone -b neo-tool https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
+git clone -b neo-tool-jiuquan https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
 ```
 Start project 
 ```
@@ -52,7 +52,21 @@ cd Neo-Explorer-Tool
 
 ![image](https://user-images.githubusercontent.com/86407596/132462791-0e4de6fe-78fc-4883-baca-2abc5341fd0d.png)
 
-Docker images and respective containers are built successfully as shown above. Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080. 
+Docker images and respective containers are built successfully as shown above. There will be 8 docker containers.
+
+* neo-rc2-private is a container for running neo nodes
+
+* vueApp is a container of the browser front-end pages
+
+* service_http_test is the container for the browser API interface
+
+* mongodb1_test, mongodb2_test, mongodb3_test are mongo replica sets containers, of which Mongodb1_test is the primary database of the sets. And mongodb1_test is the only entry to view the node data
+
+* mongodb_test is a mongo container that stores hot data on the chain
+
+* cache_test is the container for the redis cache on the chain
+
+Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080. 
 
 If you want to create your own private chain, or connect to the mainnet/testnet, please follow the [Usages](#Usages) part
 
