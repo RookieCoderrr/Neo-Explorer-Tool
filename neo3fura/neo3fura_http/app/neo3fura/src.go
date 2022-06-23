@@ -133,9 +133,9 @@ func main() {
 		Client: client,
 	}
 
-	w := &watch.T{
-		Client: client,
-	}
+// 	w := &watch.T{
+// 		Client: client,
+// 	}
 
 	h := &joh.T{}
 	v := &verify.T{
