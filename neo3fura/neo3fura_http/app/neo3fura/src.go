@@ -7,7 +7,6 @@ import (
 	"gopkg.in/yaml.v2"
 	"neo3fura_http/biz/api"
 	"neo3fura_http/biz/job"
-	"neo3fura_http/biz/watch"
 	"neo3fura_http/lib/cli"
 	"neo3fura_http/lib/joh"
 	log2 "neo3fura_http/lib/log"
