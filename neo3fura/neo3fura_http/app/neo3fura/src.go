@@ -151,12 +151,12 @@ func main() {
 	}()
 
 	if cfg.Replica == "master" {
-		go func() {
-			err := w.GetFirstEventByTransactionHash()
-			if err != nil {
-				log2.Fatalf("run watching error:%v", err)
-			}
-		}()
+// 		go func() {
+// 			err := w.GetFirstEventByTransactionHash()
+// 			if err != nil {
+// 				log2.Fatalf("run watching error:%v", err)
+// 			}
+// 		}()
 
 		c1 := cron.New()
 		c2 := cron.New()
