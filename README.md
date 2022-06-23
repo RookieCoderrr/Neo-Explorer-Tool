@@ -40,7 +40,7 @@ An API platform for building and using APIs, you can send http request to obtain
 ### Getting started
 Downdload project
 ```
-git clone -b neo-tool https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
+git clone -b neo-tool-jiuquan https://github.com/RookieCoderrr/Neo-Explorer-Tool.git
 ```
 Start project 
 ```
@@ -52,7 +52,21 @@ cd Neo-Explorer-Tool
 
 ![image](https://user-images.githubusercontent.com/86407596/132462791-0e4de6fe-78fc-4883-baca-2abc5341fd0d.png)
 
-Docker images and respective containers are built successfully as shown above. Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080. 
+Docker images and respective containers are built successfully as shown above. There will be 8 docker containers.
+
+* neo-rc2-private is a container for running neo nodes
+
+* vueApp is a container of the browser front-end pages
+
+* service_http_test is the container for the browser API interface
+
+* mongodb1_test, mongodb2_test, mongodb3_test are mongo replica sets containers, of which Mongodb1_test is the primary database of the sets. And mongodb1_test is the only entry to view the node data
+
+* mongodb_test is a mongo container that stores hot data on the chain
+
+* cache_test is the container for the redis cache on the chain
+
+Now, a default private chain is running in background in the container neo-cr2-private, and you can view the private chain data in your browser http://localhost:8080. 
 
 If you want to create your own private chain, or connect to the mainnet/testnet, please follow the [Usages](#Usages) part
 
@@ -88,10 +102,9 @@ the neo-rc2-private container will automatically synchronize the local SmartCont
 
 How to configure your own chain ?  Please refer to [Build a private chain](https://docs.neo.org/docs/en-us/develop/network/private-chain/solo.html).
 
-> **Notes**:
->All of your modification and configurantion should be done in your local host (not in neo-rc2-private container which will cause data confusion)
+IF you have a new node package, you need to enter the neocli/neo-cli directory, keep the Plugins folder, entry.sh file, defaultWallet.json file in this directory, and delete other files. Then copy all the contents of the new node package to the neocli/neo-cli directory. If the new node package also has a Plugins folder, keep the Plugins folder of the original directory and delete the new one. After copying, you need to check whether the config.json is configured correctly, and whether the network in config.json is the same as that of all config.json under Plugins directory. 
 
-After your configuration, excute this command to rebuild the project.
+After your configuration above, you should rebuild all docker containers . Only need to excute this command again to rebuild.
 ```
 ./delpy.sh 
 ```
@@ -114,7 +127,7 @@ dotnet neo-cli.dll
 
 #### Mongodb 
 
-enter into docker command line in mongodb1_test container
+enter into docker command line in mongodb1_test container which is the only entry you can query chain date.
 
 ```
 docker exec -it mongodb1_test /bin/bash
@@ -162,7 +175,7 @@ response format
 { "id": 1, "result": { "hash": "0x226844a595780dd2881bbfedbf4ffabe25fcc691969359aa1b7f87a715cdea75" }, "error": null }
 ```
 
-Refer to [Neofura-Doc](https://neo3phora-doc.readthedocs.io/en/latest/docs/APIs/index.html) for more API service info.
+Refer to [Neofura-Doc](https://neo-ngd.github.io/neo3fura/#/) for more API service info.
 
 The url and port exposed for API service is http://127.0.0.1:1926
 
