@@ -2,7 +2,7 @@
   "PluginConfiguration": {
     "Servers": [
       {
-        "Network": 4411722,
+        "Network": 66,
         "BindAddress": "127.0.0.1",
         "Port": 10332,
         "SslCert": "",

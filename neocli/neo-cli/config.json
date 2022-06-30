@@ -23,7 +23,7 @@
     }
   },
   "ProtocolConfiguration": {
-    "Network": 4411722,
+    "Network": 66,
     "AddressVersion": 53,
     "MillisecondsPerBlock": 15000,
     "MaxTransactionsPerBlock": 512,
@@ -31,20 +31,17 @@
     "MaxTraceableBlocks": 2102400,
     "InitialGasDistribution": 20000000000000000,
     "StandbyCommittee": [
-      "034a748b1aca60834270cbe4aa3ceee4b2f1116f1299a17ed9bb76cad7a1e5f615"
+      "03577154c414b4e5b2cc8624dc709d7394967a85f90972c191283704f77f69f084"
     ],
     "StandbyValidators": [
-      "034a748b1aca60834270cbe4aa3ceee4b2f1116f1299a17ed9bb76cad7a1e5f615",
-      "0378aaa4d8caa3d88f40c46ac6f4206c34b49c34be7601434cb8f048ae6526c511",
-      "0303ca21e9fe0e9b04c7dd367825238e6c9f3f690b6a37b77b70ddd1f1c2b1d29b",
-      "02e91f1554ef3b474c6965ccd76f1aaba7626d73b6fcd715342bd3c5bd9805d578"
+      "03577154c414b4e5b2cc8624dc709d7394967a85f90972c191283704f77f69f084",
+      "027518a9613305df0342eaa06fbd15612bc745bb4b5e5ac7f9e0c106858d9e7f8f",
+      "02f0c0fdadbcac1c5a36a0802ec2dbd216fac65047f80fd252917226b58d9f4d1c",
+      "034e3e5076de9a8f21de2092d414165414b513cdf570cccb2d9f00028d370165a6"
     ],
     "SeedList": [
-      "117.107.141.162:30003",
-      "117.107.141.162:30013",
-      "117.107.141.162:30023",
-      "117.107.141.162:30033"
-
+      "69.230.230.191",
+      "69.231.148.99"
     ]
   }
 }
