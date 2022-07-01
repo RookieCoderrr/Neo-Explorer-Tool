@@ -29,7 +29,7 @@
     "MaxTransactionsPerBlock": 512,
     "MemoryPoolMaxTransactions": 50000,
     "MaxTraceableBlocks": 2102400,
-    "InitialGasDistribution": 20000000000000000,
+    "InitialGasDistribution": 10000000000000000,
     "StandbyCommittee": [
       "03577154c414b4e5b2cc8624dc709d7394967a85f90972c191283704f77f69f084"
     ],
